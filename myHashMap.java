@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Sanjana Kaushik / COMP 272 ***
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -231,7 +231,24 @@ class myHashMap<K,V> {
          * return value is returned the invoking function based on the remove outcome.
          */
 
-        return null;
+        int index = getBucketIndex(key); // Get the index of the bucket where the key might be stored
+        HashNode<K, V> head = bucket.get(index); // Get the head node of the linked list at the calculated index
+        HashNode<K, V> prev = null;
+
+        while (head != null) { // Traverse the linked list at the given index
+            if (head.key.equals(key)) { // Check if the current node contains the key
+                if (prev != null) { // If it's not the first node, update the previous node's next pointer
+                    prev.next = head.next;
+                } else {
+                    bucket.set(index, head.next); // If it's the first node, update the bucket to point to the next node
+                }
+                size--; // Decrease the size of the HashMap
+                return head.value; // Return the removed value
+            }
+            prev = head; // Move the previous pointer forward
+            head = head.next; // Move to the next node
+        }
+        return null; // If the key was not found, return null
     }
 
 
@@ -406,7 +423,18 @@ class myHashMap<K,V> {
          * replace (see method's prologue above).
          */
 
-        return val;
+        int index = getBucketIndex(key); // Get the index of the bucket where the key might be stored
+        HashNode<K, V> head = bucket.get(index); // Get the head node of the linked list at the calculated index
+
+        while (head != null) { // Traverse the linked list at the given index
+            if (head.key.equals(key)) { // Check if the current node contains the key
+                V oldValue = head.value; // Store the old value
+                head.value = val; // Replace with the new value
+                return oldValue; // Return the old value
+            }
+            head = head.next; // Move to the next node
+        }  
+        return null; // If the key was not found, return null
     }
 
     
@@ -434,7 +462,17 @@ class myHashMap<K,V> {
          * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
          */
 
-        return false;
+        int index = getBucketIndex(key); // Get the index of the bucket where the key might be stored
+        HashNode<K, V> head = bucket.get(index); // Get the head node of the linked list at the calculated index
+
+        while (head != null) { // Traverse the linked list at the given index
+            if (head.key.equals(key) && head.value.equals(oldVal)) { // Check if the current node contains the key and the old value matches
+                head.value = newVal; // Replace the value with newVal
+                return true; // Indicate successful replacement
+            }
+            head = head.next; // Move to the next node
+        }
+        return false; // If the key was not found or oldVal did not match, return false
     }
 
 
