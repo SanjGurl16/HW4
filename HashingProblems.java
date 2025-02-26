@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Sanjana Kaushik / COMP 272 ***
  *
  * This HashingProblems object contains three methods / problems that you must
  * complete utilize the HashMap object within the Java's Collection Framework Library.
@@ -41,7 +41,17 @@ class HashingProblems {
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
 
-         return 0.0 / 0.0;
+        double sum = 0; // Initialize sum to store the total of matching values and count to track how many values were found
+        int count = 0;
+
+        for (int key : array) { // Iterate through the given array
+            if (map.containsKey(key)) { // Check if the key exists in the HashMap
+                sum += map.get(key); // Add the corresponding value to the sum
+                count++; // Increment the count of found values
+            }
+        }
+
+        return (count == 0) ? (0.0 / 0.0) : (sum / count); // If no matching keys were found, return NaN (0.0/0.0)
   }
 
 
@@ -54,7 +64,7 @@ class HashingProblems {
 
   public ArrayList<String> odd(HashMap<Integer, String> map) {
     
-      ArrayList<String> result = new ArrayList<>();
+      ArrayList<String> result = new ArrayList<>(); // Initialize an ArrayList to store the values corresponding to odd keys
 
       /*
        * ADD YOUR CODE HERE
@@ -63,7 +73,13 @@ class HashingProblems {
        */
 
 
-      return result;
+        for (Integer key : map.keySet()) { // Iterate through all keys in the HashMap
+            if (key % 2 != 0) { // Check if the key is odd
+                result.add(map.get(key)); // Add the corresponding value to the result list
+            }
+        }
+      
+      return result; // Return the list of values associated with odd keys
   }
 
 
@@ -110,7 +126,20 @@ class HashingProblems {
        * ADD YOUR CODE HERE
        */
 
-      return -1;
+    HashSet<Integer> set = new HashSet<>(); // Create a HashSet to store the numbers for quick lookups
+    int count = 0;
+
+    for (int num : numbers) { // Populate the HashSet with the numbers from the array
+        set.add(num);
+    }
+
+    for (int num : numbers) { // Iterate through the array and check if (num + k) exists in the set
+        if (set.contains(num + k)) { // If a valid pair is found
+            count++; // Increment count
+        }
+    }
+
+    return count; // Return the total count of valid pairs
   }
 
 } /* end class HashingProblems */
